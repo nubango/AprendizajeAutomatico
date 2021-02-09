@@ -20,8 +20,8 @@ def sigmoid(Z):
 
 # Devuelve un valor de coste
 def cost(O, X, Y, l):
-    return (-(((np.log(sigmoid(X.dot(0)))).T.dot(Y) 
-    + (np.log(1 - sigmoid(X.dot(0)))).T.dot(1 - Y)) / X.shape[0])
+    return (-(((np.log(sigmoid(X.dot(O)))).T.dot(Y) 
++ (np.log(1 - sigmoid(X.dot(O)))).T.dot(1 - Y)) / X.shape[0])
     + (1 / (2 * X.shape[0])) * (O[1:,]**2).sum())
 
 # La operacion que hace el gradiente por dentro. Devueve un vector de valores
@@ -76,24 +76,27 @@ def main():
     valores = loadMat("ex3data1.mat")
 
     X = valores['X']
-    Y = valores['Y']
+    Y = valores['y']
 
     m = X.shape[0] # numero de muestras de entrenamiento
     n = X.shape[1] # numero de variable x que influyen en el resultado y, mas la columna 1s 
     numEtiquetas = 10
 
-    X = np.hs([np.one([m, 1]), X])
+    X = np.hstack([np.ones([m, 1]), X])
 
     # Cuanto mas se aproxime a 0, mas se ajustara el polinomio (menor regularizacion)
     l = 0.1
     O = oneVsAll(X, Y, numEtiquetas, l)
 
+    success = logisticSuccessPercentage(X, Y, O)
+    print("Logistic regression success: " + str(success) + " %")
+
     # Redes neuronales
     weights = loadMat('ex3weights.mat')
     O1, O2 = weights['Theta1'], weights['Theta2']
 
-    success = logisticSuccessPercentage(X, Y, O)
-    print("Logistic regression success: " + str(success) + " %")
+    success = neuronalSuccessPercentage(propagacion(X, O1, O2), Y)
+    print("Neuronal network success: " + str(success) + " %")
 
     graphics(X[:, 1:])
 
