@@ -3,7 +3,6 @@ import scipy.optimize as opt
 from matplotlib import pyplot as plt
 from scipy.io import loadmat
 
-# Carga el fichero mat especificado y lo devuelve en una matriz data
 def loadMat(fileName):
     return loadmat(fileName)
 
@@ -14,23 +13,21 @@ def graphics(X):
     plt.axis('off')
     plt.show()
 
-# g(X*Ot) = h(x)
 def sigmoid(Z):
     return 1/(1+np.exp(-Z))
 
-# Devuelve un valor de coste
 def cost(Theta, X, Y, l):
     return (-(((np.log(sigmoid(X.dot(Theta)))).T.dot(Y) 
 + (np.log(1 - sigmoid(X.dot(Theta)))).T.dot(1 - Y)) / X.shape[0])
     + (1 / (2 * X.shape[0])) * (Theta[1:,]**2).sum())
 
-# La operacion que hace el gradiente por dentro. Devueve un vector de valores
+
 def gradient(Theta, X, Y, l):
     AuxO = np.hstack([np.zeros([1]), Theta[1:,]])
     return (((X.T.dot(sigmoid(X.dot(Theta)) - np.ravel(Y))) / X.shape[0]) 
     + (l / X.shape[0]) * AuxO)
 
-# Para cada ejemplo (fila de Xs), haya los pesos theta por cada posible tipo de numero que pueda ser
+
 def oneVsAll(X, Y, numEtiquetas, reg):
     clase = 10
     Theta = np.zeros([numEtiquetas, X.shape[1]])
@@ -78,8 +75,8 @@ def main():
     X = valores['X']
     Y = valores['y']
 
-    m = X.shape[0] # numero de muestras de entrenamiento
-    n = X.shape[1] # numero de variable x que influyen en el resultado y, mas la columna 1s 
+    m = X.shape[0] 
+    n = X.shape[1] 
     numEtiquetas = 10
 
     X = np.hstack([np.ones([m, 1]), X])

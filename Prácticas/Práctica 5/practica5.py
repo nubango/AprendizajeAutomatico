@@ -93,9 +93,9 @@ def main():
     Xtest = valores['Xtest'] # prueba
     Ytest = valores['ytest']
 
-    Xpoly = polynomize(X, 8)                   # pone automaticamente columna de 1s
-    Xnorm, mu, sigma = normalize(Xpoly[:, 1:]) # se pasa sin la columna de 1s (evitar division entre 0)
-    Xnorm = np.hstack([np.ones([Xnorm.shape[0], 1]), Xnorm]) # volvemos a poner columna de 1s
+    Xpoly = polynomize(X, 8)                   
+    Xnorm, mu, sigma = normalize(Xpoly[:, 1:]) 
+    Xnorm = np.hstack([np.ones([Xnorm.shape[0], 1]), Xnorm]) 
 
     XpolyVal = polynomize(Xval, 8)
     XnormVal = normalizeValues(XpolyVal[:, 1:], mu, sigma)
