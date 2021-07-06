@@ -14,7 +14,8 @@ y = df['newRings']
 
 X.info()
 
-m = X.shape[0]
+m = len(y)
+
 num_entradas = 7
 num_ocultas = 7
 num_etiquetas = 1
@@ -22,7 +23,8 @@ num_etiquetas = 1
 print(X.shape)
 print(y.shape)
 
-Y = y
+#Y = np.hstack([np.ones([m,1]),y)
+Y = y[:,np.newaxis]
 
 print(Y.shape)
 
